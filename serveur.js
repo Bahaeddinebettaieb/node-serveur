@@ -32,7 +32,7 @@ app.get("/allS", function(req,res){
    },{
     id_Utilisateur:2,
     nom:'Rassas',
-    prenom:'Amine',
+    prenom:'Ahmed Amine',
     email:'AmineRassas@gmail.com',
     etat:'faible',
     role:'utilisateur'
@@ -110,7 +110,8 @@ app.post("/removeuser",function(req,res){+
 })
 
 app.post("/updateuser",function(req,res){
-    con.query("update user set nom ='"+req.body.nom+"',prenom = '"+req.body.prenom+"',email ='"+req.body.email+"',etat = '"+req.body.etat+"', password = "+req.body.password+", telephone = "+req.body.tel+", adresse = '"+req.body.adr+"' where id_Utilisateur ="+req.body.id,function (err ,result){
+   // console.log(req.body.tel);
+    con.query("update user set nom ='"+req.body.nom+"',prenom = '"+req.body.prenom+"',email ='"+req.body.email+"', password = "+req.body.pwd+", telephone = "+req.body.tel+", adresse = '"+req.body.adr+"' where id_Utilisateur ="+req.body.id,function (err ,result){
         if(err){
 			console.log(err);
 			res.send("erreur");
