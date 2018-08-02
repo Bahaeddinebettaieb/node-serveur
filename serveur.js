@@ -53,19 +53,21 @@ app.get("/allS", function(req,res){
 }];
 res.send(JSON.stringify(users));
 })
-
+    // function select all user
 app.get("/all", function(req,res){
     con.query("select * from user", function(err,result){
-        if(err){res.send("erreur");}
-        else {res.send(JSON.stringify(result));}
+        if(err){
+            res.send("erreur");
+        }else{
+            res.send(JSON.stringify(result));
+        }
     })
 })
-
+    // function for login
 app.post("/verif",function(req,res){
     console.log(req.body.email);
     con.query("select count(*) as found from user where email='"+req.body.email+"' and password="+req.body.password, function(err,result){
-    //con.query("select count(*) from user where email='baha.1996.bt@gmail.com' and password=123123", function(err,result){
-     
+    //con.query("select count(*) from user where email='baha.1996.bt@gmail.com' and password=123123", function(err,result){ 
    if(err){
 	   res.send("erreur");
        console.log(err);
@@ -80,7 +82,7 @@ app.post("/verif",function(req,res){
 	}
     })
 })
-
+    // function for add a new user
 app.post("/ajout",function(req,res){
 	con.query("insert into user (nom,prenom,email,etat,role,password,telephone,adresse) values ('"+req.body.nom+"','"+req.body.prenom+"','"+req.body.email+"',\"active\",'"+req.body.role+"',"+req.body.pass+","+req.body.tel+",'"+req.body.adr+"')", function(err,result){
 	if(err){
@@ -97,7 +99,7 @@ app.post("/ajout",function(req,res){
 		}
     })
 })
-
+    //function for remove user
 app.post("/removeuser",function(req,res){+
     con.query("DELETE from user where id_Utilisateur ="+req.body.id+"",function (err ,result){
         if(err){
@@ -108,7 +110,7 @@ app.post("/removeuser",function(req,res){+
 		}
     })
 })
-
+    // function for update user
 app.post("/updateuser",function(req,res){
    // console.log(req.body.tel);
     con.query("update user set nom ='"+req.body.nom+"',prenom = '"+req.body.prenom+"',email ='"+req.body.email+"', password = "+req.body.pwd+", telephone = "+req.body.tel+", adresse = '"+req.body.adr+"' where id_Utilisateur ="+req.body.id,function (err ,result){
@@ -130,6 +132,15 @@ app.post("/getuser",function(req,res){
 			res.send(JSON.stringify(result));
 			console.log(JSON.stringify(result));
 		}
+    })
+})
+app.get("/alltick", function(req,res){
+    con.query("select * from ticket", function(err,result){
+        if(err){
+            res.send("erreur");
+        }else{
+            res.send(JSON.stringify(result));
+        }
     })
 })
 app.listen(3000, function() {
