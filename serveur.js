@@ -85,6 +85,25 @@ app.use(bodyparser.json());
         })
     })
 
+    // function that return user using email 
+    app.post("/getuser",function(req,res){
+        console.log(req.body.email);
+        con.query("select * from user where email='"+req.body.email, function(err,result){ 
+    if(err){
+        res.send("erreur");
+        console.log(err);
+        }else {
+            console.log(result[0].found);
+            if (result[0].found === 1){
+            res.status(200).send(JSON.stringify(result));	
+            }else{
+                res.status(500).send("erreur");	
+            }
+            console.log(JSON.stringify(result));
+        }
+        })
+    })
+
         // function for add a new user
     app.post("/ajout",function(req,res){
         con.query("insert into user (nom,prenom,email,etat,role,password,telephone,adresse) values ('"+req.body.nom+"','"+req.body.prenom+"','"+req.body.email+"',\"active\",'"+req.body.role+"',"+req.body.pass+","+req.body.tel+",'"+req.body.adr+"')", function(err,result){
