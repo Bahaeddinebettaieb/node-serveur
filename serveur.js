@@ -65,8 +65,18 @@ app.use(bodyparser.json());
         })
     })
 
+    app.get("/email", function(req,res){
+        con.query("select email from user", function(err,result){
+            if(err){
+                res.send("erreur");
+            }else{
+                res.send(JSON.stringify(result));
+            }
+        })
+    })
+
         // function for login
-    app.post("/verif",function(req,res){
+    app.post("/veriforg",function(req,res){
         console.log(req.body.email);
         con.query("select count(*) as found from user where email='"+req.body.email+"' and password="+req.body.password, function(err,result){
         //con.query("select count(*) from user where email='baha.1996.bt@gmail.com' and password=123123", function(err,result){ 
@@ -85,10 +95,30 @@ app.use(bodyparser.json());
         })
     })
 
-    // function that return user using email 
-    app.post("/getuser",function(req,res){
+    app.post("/verif",function(req,res){
         console.log(req.body.email);
-        con.query("select * from user where email='"+req.body.email, function(err,result){ 
+        con.query("select * from user where email='"+req.body.email+"' and password="+req.body.password, function(err,result){
+        //con.query("select count(*) from user where email='baha.1996.bt@gmail.com' and password=123123", function(err,result){ 
+    if(err){
+        res.send("erreur");
+        console.log(err);
+        }else {
+            console.log(result[0].email);
+            if (result[0].email ){
+            res.status(200).send(JSON.stringify(result));	
+            }else{
+                res.status(500).send("erreur");	
+            }
+            console.log(JSON.stringify(result));
+        }
+        })
+    })
+
+
+    // function that return user using email 
+    app.post("/getnom",function(req,res){
+        console.log(req.body.email);
+        con.query("select nom from user where email='"+req.body.email, function(err,result){ 
     if(err){
         res.send("erreur");
         console.log(err);
@@ -137,7 +167,7 @@ app.use(bodyparser.json());
         // function for update user
     app.post("/updateuser",function(req,res){
     // console.log(req.body.tel);
-        con.query("update user set nom ='"+req.body.nom+"',prenom = '"+req.body.prenom+"',email ='"+req.body.email+"', password = "+req.body.pwd+", telephone = "+req.body.tel+", adresse = '"+req.body.adr+"' where id_Utilisateur ="+req.body.id,function (err ,result){
+        con.query("update user set nom ='"+req.body.nom+"',prenom = '"+req.body.prenom+"',email ='"+req.body.email+"',role = '"+req.body.role+"', password = "+req.body.pwd+", telephone = "+req.body.tel+", adresse = '"+req.body.adr+"' where id_Utilisateur ="+req.body.id,function (err ,result){
             if(err){
                 console.log(err);
                 res.send("erreur");
@@ -147,9 +177,9 @@ app.use(bodyparser.json());
         })
     })
 
-        //function for select one user
+        //function for select one user using the id
     app.post("/getuser",function(req,res){
-        con.query("select * from user where id_Utilisateur ="+ req.body.id ,function (err ,result){
+        con.query("select * from user where id_Utilisateur ="+req.body.id ,function (err ,result){
             if(err){
                 console.log(err);
                 res.send("erreur");
