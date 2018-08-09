@@ -76,7 +76,7 @@ app.use(bodyparser.json());
     })
 
         // function for login
-    app.post("/veriforg",function(req,res){
+    /*app.post("/veriforg",function(req,res){
         console.log(req.body.email);
         con.query("select count(*) as found from user where email='"+req.body.email+"' and password="+req.body.password, function(err,result){
         //con.query("select count(*) from user where email='baha.1996.bt@gmail.com' and password=123123", function(err,result){ 
@@ -93,7 +93,7 @@ app.use(bodyparser.json());
             console.log(JSON.stringify(result));
         }
         })
-    })
+    })*/
 
     app.post("/verif",function(req,res){
         console.log(req.body.email);
@@ -241,7 +241,7 @@ app.use(bodyparser.json());
 
      // function for add a new ticket
     app.post("/ajouttick",function(req,res){
-        con.query("insert into ticket (label,description,statut,demandeur,responsable,urgence,dateouv,datefer) values ('"+req.body.label+"','"+req.body.description+"',\"nouveau\",'"+req.body.demandeur+"','"+req.body.responsable+"','"+req.body.urgence+"',\"date.now()\",'"+req.body.datefer+"')", function(err,result){
+        con.query("insert into ticket (label,description,statut,demandeur,responsable,urgence,dateouv,datefer) values ('"+req.body.label+"','"+req.body.description+"',\"Ouvert\",'"+req.body.demandeur+"','"+req.body.responsable+"','"+req.body.urgence+"',\"date.now()\",'"+req.body.datefer+"')", function(err,result){
         if(err){
             res.send("erreur");
             console.log(err);}
@@ -257,6 +257,6 @@ app.use(bodyparser.json());
         })
     })
      
-app.listen(3000, function() {
-    console.log("http://localhost:3000");
-})
+    app.listen(3000, function() {
+        console.log("http://localhost:3000");
+    })
