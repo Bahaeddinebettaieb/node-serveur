@@ -189,6 +189,20 @@ app.use(bodyparser.json());
             }
         })
     })
+        // function for select user using the email
+    app.post("/getuseremail",function(req,res){
+        con.query("select * from user where email = '"+req.body.email+"'",function (err ,result){
+            if(err){
+                console.log(err);
+                res.send("erreur");
+            }else{
+                res.send(JSON.stringify(result));
+                console.log(JSON.stringify(result));
+            }
+        })
+    })
+
+
 
         // funcrion for select all tickets
     app.get("/alltick", function(req,res){
@@ -219,7 +233,7 @@ app.use(bodyparser.json());
         con.query("select * from ticket where id_ticket ="+ req.body.id ,function (err ,result){
             if(err){
                 console.log(err);
-                res.send("erreur");
+                res.send("erreur uyfytfyt");
             }else{
                 res.send(JSON.stringify(result));
                 console.log(JSON.stringify(result));
@@ -241,7 +255,7 @@ app.use(bodyparser.json());
 
      // function for add a new ticket
     app.post("/ajouttick",function(req,res){
-        con.query("insert into ticket (label,description,statut,demandeur,responsable,urgence,dateouv,datefer) values ('"+req.body.label+"','"+req.body.description+"',\"Ouvert\",'"+req.body.demandeur+"','"+req.body.responsable+"','"+req.body.urgence+"',\"date.now()\",'"+req.body.datefer+"')", function(err,result){
+        con.query("insert into ticket (label,description,statut,demandeur,responsable,urgence,dateouv,datefer) values ('"+req.body.label+"','"+req.body.description+"',\"Ouvert\",'"+req.body.demandeur+"','"+req.body.responsable+"','"+req.body.urgence+"','"+req.body.dateouv+"','"+req.body.datefer+"')", function(err,result){
         if(err){
             res.send("erreur");
             console.log(err);}
@@ -256,6 +270,21 @@ app.use(bodyparser.json());
             }
         })
     })
+
+     // function for select statut of ticket using the id
+     app.post("/getstatut",function(req,res){
+        con.query("select statut from ticket where id_ticket = "+req.body.id,function (err ,result){
+            if(err){
+                console.log(err);
+                res.send("erreur");
+            }else{
+                res.send(JSON.stringify(result));
+                console.log(JSON.stringify(result));
+            }
+        })
+    })
+
+    
      
     app.listen(3000, function() {
         console.log("http://localhost:3000");
