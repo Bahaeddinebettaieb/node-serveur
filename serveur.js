@@ -64,7 +64,7 @@ app.use(bodyparser.json());
             }
         })
     })
-
+        // function select one user using email
     app.get("/email", function(req,res){
         con.query("select email from user", function(err,result){
             if(err){
@@ -94,23 +94,22 @@ app.use(bodyparser.json());
         }
         })
     })*/
-
+        //function for login
     app.post("/verif",function(req,res){
         console.log(req.body.email);
         con.query("select * from user where email='"+req.body.email+"' and password="+req.body.password, function(err,result){
-        //con.query("select count(*) from user where email='baha.1996.bt@gmail.com' and password=123123", function(err,result){ 
-    if(err){
-        res.send("erreur");
-        console.log(err);
-        }else {
-            console.log(result[0].email);
-            if (result[0].email ){
-            res.status(200).send(JSON.stringify(result));	
-            }else{
-                res.status(500).send("erreur");	
-            }
+            if(err){
+                res.send("erreur");
+                console.log(err);
+            }else {
+                console.log(result[0].email);
+                if (result[0].email ){
+                    res.status(200).send(JSON.stringify(result));	
+                }else{
+                    res.status(500).send("erreur");	
+                }
             console.log(JSON.stringify(result));
-        }
+            }
         })
     })
 
@@ -131,6 +130,19 @@ app.use(bodyparser.json());
             }
             console.log(JSON.stringify(result));
         }
+        })
+    })
+
+        //function for select one user
+    app.post("/getuser",function(req,res){
+        con.query("select * from user where id_Utilisateur ="+ req.body.id ,function (err ,result){
+            if(err){
+                console.log(err);
+                res.send("erreur");
+            }else{
+                res.send(JSON.stringify(result));
+                console.log(JSON.stringify(result));
+            }
         })
     })
 
