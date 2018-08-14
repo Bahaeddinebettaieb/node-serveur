@@ -2,6 +2,8 @@ var express= require("express");
 var cors= require("cors");
 const bodyparser= require ("body-parser");
 var mysql= require('mysql');
+var dateformat= require('dateformat');
+
 
 var con = mysql.createConnection({
     host     : 'localhost',
@@ -252,6 +254,22 @@ app.use(bodyparser.json());
             }
         })
     })
+
+        //update status et la date de fermeture apres cliquer sur fermer
+    app.post("/updatestatus",function(req,res){
+        var date=dateformat(new Date(), "yyyy-mm-dd");
+        console.log(date);
+        con.query("update ticket set statut ='fermer', datefer = '"+date+"' where id_ticket ="+req.body.id,function (err ,result){
+            if(err){
+                console.log(err);
+                res.send("erreur");
+            }else{
+                res.send(JSON.stringify(result));
+            }
+        })
+    })  
+
+
 
     //function for update ticket
     app.post("/updateticket",function(req,res){
